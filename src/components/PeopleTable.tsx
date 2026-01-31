@@ -73,8 +73,11 @@ export const PeopleTable: React.FC<PeopleTableProps> = ({ people, active }) => {
   if (query) {
     const lowerQuery = query.toLowerCase();
 
-    filteredPeople = [...filteredPeople].filter(person =>
-      person.name.toLowerCase().includes(lowerQuery),
+    filteredPeople = [...filteredPeople].filter(
+      person =>
+        person.name.toLowerCase().includes(lowerQuery) ||
+        person.motherName?.toLowerCase().includes(lowerQuery) ||
+        person.fatherName?.toLowerCase().includes(lowerQuery),
     );
   }
 
@@ -93,6 +96,10 @@ export const PeopleTable: React.FC<PeopleTableProps> = ({ people, active }) => {
 
     return '';
   };
+
+  if (filteredPeople.length === 0) {
+    return <p>There are no people matching the current search criteria</p>;
+  }
 
   return (
     <table
